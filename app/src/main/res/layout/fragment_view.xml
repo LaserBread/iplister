@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="@dimen/view_host_entry_margin"
+        android:id="@+id/view_hostname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TheLaptop!"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintStart_toStartOf="@id/root_view"
+        app:layout_constraintTop_toBottomOf="@id/view_title" />
+
+    <TextView
+        android:id="@+id/view_hostname_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAC Address"
+        android:textAppearance="?attr/textAppearanceLabelSmall"
+        app:layout_constraintStart_toStartOf="@id/view_hostname"
+        app:layout_constraintTop_toBottomOf="@id/view_hostname" />
+
+    <TextView
+        android:id="@+id/view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Laptop"
+        android:textAppearance="?attr/textAppearanceHeadline3"
+        app:layout_constraintStart_toStartOf="@id/root_view"
+        app:layout_constraintTop_toTopOf="@id/root_view" />
+
+    <TextView
+        android:id="@+id/view_ipv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_host_entry_margin"
+        android:text="255.255.255.255"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintStart_toStartOf="@id/root_view"
+        app:layout_constraintTop_toBottomOf="@id/view_hostname_label" />
+
+    <TextView
+        android:id="@+id/view_ipv4_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IPv4 Address"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        app:layout_constraintStart_toStartOf="@id/view_ipv4"
+        app:layout_constraintTop_toBottomOf="@id/view_ipv4" />
+
+
+    <TextView
+        android:id="@+id/view_cidr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/32"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/view_ipv4"
+        app:layout_constraintStart_toEndOf="@id/view_ipv4" />
+
+    <TextView
+        android:id="@+id/view_cidr_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_cidr_text"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        app:layout_constraintEnd_toEndOf="@id/view_cidr"
+        app:layout_constraintTop_toBottomOf="@id/view_cidr" />
+
+    <TextView
+        android:id="@+id/view_mac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_host_entry_margin"
+        android:text="FF:FF:FF:FF:FF:FF"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintStart_toStartOf="@id/root_view"
+        app:layout_constraintTop_toBottomOf="@id/view_cidr_label" />
+
+    <TextView
+        android:id="@+id/view_mac_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAC Address"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        app:layout_constraintStart_toStartOf="@id/view_mac"
+        app:layout_constraintTop_toBottomOf="@id/view_mac" />
+
+    <TextView
+        android:layout_marginTop="@dimen/view_host_entry_margin"
+        android:id="@+id/view_notes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintTop_toBottomOf="@+id/view_mac_label"/>
+
+    <LinearLayout
+        android:id="@+id/view_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view_notes_copybutton"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="note data"
+
+            />
+    </LinearLayout>
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_hostname_copybutton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:background="?android:attr/selectableItemBackground"
+        app:icon="@drawable/outline_content_copy_24"
+        app:iconSize="24sp"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@id/view_hostname_label"
+        app:layout_constraintEnd_toEndOf="@id/root_view"
+        app:layout_constraintTop_toTopOf="@id/view_hostname" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_mac_copybutton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:background="?android:attr/selectableItemBackground"
+        app:icon="@drawable/outline_content_copy_24"
+        app:iconSize="24sp"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@id/view_mac_label"
+        app:layout_constraintEnd_toEndOf="@id/root_view"
+        app:layout_constraintTop_toTopOf="@id/view_mac" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_ipv4_copybutton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:background="?android:attr/selectableItemBackground"
+        app:icon="@drawable/outline_content_copy_24"
+        app:iconSize="24sp"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@id/view_ipv4_label"
+        app:layout_constraintEnd_toEndOf="@id/root_view"
+        app:layout_constraintTop_toTopOf="@id/view_ipv4" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/view_notes_copybutton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:background="?android:attr/selectableItemBackground"
+        app:icon="@drawable/outline_content_copy_24"
+        app:iconSize="24sp"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="@id/view_notes_label"
+        app:layout_constraintEnd_toEndOf="@id/root_view"
+        app:layout_constraintTop_toTopOf="@id/view_notes_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

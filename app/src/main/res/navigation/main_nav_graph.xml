@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/nav_list_fragment">
+
+    <fragment
+        android:id="@+id/nav_list_fragment"
+        android:name="edu.oregonstate.joneset3.iplist.fragments.ListFragment"
+        android:label="Hosts" >
+        <action
+            android:id="@+id/action_nav_list_fragment_to_viewFragment"
+            app:destination="@id/nav_view_fragment" />
+        <action
+            android:id="@+id/action_list_add"
+            app:destination="@id/nav_edit_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_view_fragment"
+        android:name="edu.oregonstate.joneset3.iplist.fragments.ViewFragment"
+        android:label="View Host">
+        <argument
+            android:name="id"
+            android:defaultValue="1"
+            app:argType="float" />
+        <action
+            android:id="@+id/action_view_edit"
+            app:destination="@id/nav_edit_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_edit_fragment"
+        android:name="edu.oregonstate.joneset3.iplist.fragments.EditFragment"
+        android:label="Edit Host" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_edit_submit"
+            app:popUpTo="@id/nav_edit_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

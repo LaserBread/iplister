@@ -28,6 +28,7 @@ data class Host(
     val ipv4: IPv4Address?,
     @Json(name = "cidrmask") val cidr: Int?,
     val mac: String?,
+    val notes: String? = null,
     val id: Int? = null
 ){
     fun validate(): List<HostErrors>{

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:id="@+id/item">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_name"
+        android:text="name"
+        android:textAppearance="?attr/textAppearanceDisplaySmall"
+        app:layout_constraintStart_toStartOf="@id/item"
+        app:layout_constraintTop_toTopOf="@id/item"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_ipv4"
+        android:text="192.160.0.1"
+        app:layout_constraintStart_toStartOf="@id/item"
+        app:layout_constraintBottom_toBottomOf="@id/item"
+        android:textAppearance="?attr/textAppearanceBody1"
+        />
+
+    <TextView
+        android:id="@+id/item_hostname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa…"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintBottom_toBottomOf="@id/item"
+        app:layout_constraintEnd_toEndOf="@id/item"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
