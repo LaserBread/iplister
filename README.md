@@ -1,1 +1,15 @@
-# iplister
+# IP Address List
+This is a simple Android app that allows you to store IP addresses for all your hosts. Good for 
+managing a network or homelab. It features storing IPv4 addresses, hostnames, and MAC addresses.
+
+> [!NOTE]
+> This app was created for my CS 492 final. As such, it's far from a production-worthy build. I may
+> revisit this app and flesh it out, but given how [Google is putting Android into a "papers, 
+> please" era](https://keepandroidopen.org/), I may have to hold off.
+
+## Setup
+Use the companion Python library to set up the database. Use your LAN or a VPN to expose it on your
+network. Download and install the app.
+
+## Acknowledgements
+This app uses [Sean Foley's IPAddress library](https://github.com/seancfoley/IPAddress).
