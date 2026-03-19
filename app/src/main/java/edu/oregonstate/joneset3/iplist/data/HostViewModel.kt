@@ -35,10 +35,24 @@ class HostViewModel : ViewModel() {
         }
     }
 
-    fun addHost(host: Host) {
+    fun add(host: Host) {
         viewModelScope.launch {
             _loadingStatus.value = LoadingStatus.LOADING
-            val result = repository.addHost(host)
+            val result = repository.add(host)
+            if (result.isSuccess) {
+                _loadingStatus.value = LoadingStatus.SUCCESS
+                loadHosts()
+            } else {
+                _loadingStatus.value = LoadingStatus.ERROR
+                _errorMessage.value = result.exceptionOrNull()?.message
+            }
+        }
+    }
+
+    fun delete(host:Host){
+        viewModelScope.launch {
+            _loadingStatus.value = LoadingStatus.LOADING
+            val result = repository.delete(host)
             if (result.isSuccess) {
                 _loadingStatus.value = LoadingStatus.SUCCESS
                 loadHosts()

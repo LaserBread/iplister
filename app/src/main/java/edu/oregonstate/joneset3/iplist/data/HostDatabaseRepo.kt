@@ -22,10 +22,24 @@ class HostDatabaseRepo(
             }
         }
 
-    suspend fun addHost(host: Host): Result<Void?> =
+    suspend fun add(host: Host): Result<Void?> =
         withContext(ioDispatcher) {
             try {
-                val res = service.addHost(host)
+                val res = service.add(host)
+                if (res.isSuccessful) {
+                    Result.success(null)
+                } else {
+                    Result.failure(Exception(res.errorBody()?.string()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+
+    suspend fun delete(host: Host): Result<Void?> =
+        withContext(ioDispatcher) {
+            try {
+                val res = service.delete(host.id!!)
                 if (res.isSuccessful) {
                     Result.success(null)
                 } else {

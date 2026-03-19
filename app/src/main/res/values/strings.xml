@@ -16,5 +16,7 @@
     <string name="err_no_identifier">At least one of Hostname, IP, or MAC is required</string>
     <string name="loading_dialog_title">Adding host…</string>
     <string name="added_host">Added host \"%1$s\"</string>
+    <string name="deleted_host">Deleted host \'%1$s</string>
+    <string name="loading_message_delete">Deleting host…</string>
 
 </resources>

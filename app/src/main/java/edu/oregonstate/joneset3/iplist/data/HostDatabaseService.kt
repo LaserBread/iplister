@@ -5,8 +5,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * This is a Retrofit service interface encapsulating communication with the Host Database.
@@ -28,7 +30,11 @@ interface HostDatabaseService {
      * @return Returns a Retrofit `Response<>` object.
      */
     @POST("add")
-    suspend fun addHost(@Body host: Host) : Response<Void>
+    suspend fun add(@Body host: Host) : Response<Void>
+
+    @DELETE("delete/{id}")
+    suspend fun delete(@Path("id") id: Int): Response<Void>
+
 
     companion object {
         private const val BASE_URL = "http://172.16.0.10:5000"

@@ -23,7 +23,6 @@ import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
 import edu.oregonstate.joneset3.iplist.data.HostErrors
 import edu.oregonstate.joneset3.iplist.util.LoadingStatus
-import inet.ipaddr.IPAddressString
 
 class AddFragment : Fragment(R.layout.fragment_edit) {
     private val tag = "AddFragment"
@@ -98,7 +97,7 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
                                 showLoadingDialog()
                                 submitting = true
                                 nameOfAddedHost = hostToAdd.name
-                                viewModel.addHost(hostToAdd)
+                                viewModel.add(hostToAdd)
                             }
                             true
                         }
