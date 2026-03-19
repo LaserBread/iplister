@@ -14,11 +14,18 @@
         <action
             android:id="@+id/action_nav_list_fragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_nav_list_fragment_to_nav_settings_fragment"
+            app:destination="@id/nav_settings_fragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_view_fragment"
         android:name="edu.oregonstate.joneset3.iplist.fragments.ViewFragment"
         android:label="View Host">
+        <action
+            android:id="@+id/action_nav_view_fragment_to_editFragment"
+            app:destination="@id/nav_edit_fragment"
+            app:popUpTo="@id/nav_view_fragment" />
         <argument
             android:name="host"
             app:argType="edu.oregonstate.joneset3.iplist.data.Host" />
@@ -27,4 +34,19 @@
         android:id="@+id/addFragment"
         android:name="edu.oregonstate.joneset3.iplist.fragments.AddFragment"
         android:label="Add host" />
+    <fragment
+        android:id="@+id/nav_edit_fragment"
+        android:name="edu.oregonstate.joneset3.iplist.fragments.EditFragment"
+        android:label="View Host">
+        <action
+            android:id="@+id/action_nav_edit_fragment_to_nav_view_fragment"
+            app:destination="@id/nav_view_fragment" />
+        <argument
+            android:name="host"
+            app:argType="edu.oregonstate.joneset3.iplist.data.Host" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings_fragment"
+        android:name="edu.oregonstate.joneset3.iplist.fragments.SettingsFragment"
+        android:label="Settings" />
 </navigation>

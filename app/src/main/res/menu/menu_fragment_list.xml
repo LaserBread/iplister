@@ -9,9 +9,12 @@
         android:title="@string/menu_act_refresh"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/list_menuact_settings"
+        android:icon="@drawable/outline_settings_24"
+        android:title="Settings" />
+    <item
         android:id="@+id/list_menuact_export"
         android:icon="@drawable/outline_file_export_24"
         android:iconTint="?attr/colorOnBackground"
-        android:title="@string/menu_act_export"
-        app:showAsAction="ifRoom" />
+        android:title="@string/menu_act_export" />
 </menu>

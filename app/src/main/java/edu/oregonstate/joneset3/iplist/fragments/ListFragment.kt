@@ -1,5 +1,6 @@
 package edu.oregonstate.joneset3.iplist.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,9 +11,10 @@ import android.widget.TextView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,15 +26,17 @@ import edu.oregonstate.joneset3.iplist.util.LoadingStatus
 
 class ListFragment : Fragment(R.layout.fragment_list) {
     private val tag = "MainActivity"
-    private val viewModel: HostViewModel by viewModels()
+    private val viewModel: HostViewModel by activityViewModels()
     private val adapter = HostListAdapter(::onHostClick)
-
+    private lateinit var prefs: SharedPreferences
     private lateinit var hostListRV: RecyclerView
     private lateinit var loadErrorTV: TextView
     private lateinit var loadingIndicator: CircularProgressIndicator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         loadingIndicator = view.findViewById(R.id.loading_indicator)
 
@@ -59,12 +63,21 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 noItemTitleTV.visibility = View.VISIBLE
                 noItemBodyTV.visibility = View.VISIBLE
                 hostListRV.visibility = View.INVISIBLE
-            }
-            else {
+            } else {
                 noItemTitleTV.visibility = View.INVISIBLE
                 noItemBodyTV.visibility = View.INVISIBLE
                 hostListRV.visibility = View.VISIBLE
-                adapter.updateHostList(hosts)
+                adapter.updateHostList(
+                    hosts,
+                    prefs.getString(
+                        getString(R.string.pref_left_side),
+                        getString(R.string.pref_display_ipv4)
+                    )!!,
+                    prefs.getString(
+                        getString(R.string.pref_right_side),
+                        getString(R.string.pref_display_hostname)
+                    )!!
+                )
             }
         }
 
@@ -91,53 +104,32 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
-            if (error != null) {
-                /*loadErrorTV.text = getString(
-                    R.string.search_error,
-                    error
-                )*/
-            }
-
             loadErrorTV.text = error
         }
 
-//        val menuHost: MenuHost = requireActivity()
-//        menuHost.addMenuProvider(
-//            object : MenuProvider {
-//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                    menuInflater.inflate(R.menu.github_search_menu, menu)
-//                }
-//
-//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                    return when (menuItem.itemId) {
-//                        R.id.action_bookmarks -> {
-//                            val directions = GitHubSearchFragmentDirections.navigateToBookmarkedRepos()
-//                            findNavController().navigate(directions)
-//                            true
-//                        }
-//                        else -> false
-//                    }
-//                }
-//            },
-//            viewLifecycleOwner,
-//            Lifecycle.State.STARTED
-//        )
-
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object: MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater){
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_fragment_list, menu)
             }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean{
-                return when (menuItem.itemId){
-                    R.id.list_menuact_refresh ->{
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.list_menuact_refresh -> {
                         viewModel.loadHosts()
                         true
                     }
-                    R.id.list_menuact_export ->{
+
+                    R.id.list_menuact_export -> {
                         true
                     }
+
+                    R.id.list_menuact_settings -> {
+                        val directions = ListFragmentDirections.actionNavListFragmentToNavSettingsFragment()
+                        findNavController().navigate(directions)
+                        true
+                    }
+
                     else -> false
                 }
 

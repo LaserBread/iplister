@@ -33,6 +33,7 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
 
     private var loadingDialog: AlertDialog? = null
     private var deleting = false
+    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,6 +79,8 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.view_menuact_edit -> {
+                        val directions = ViewFragmentDirections.actionNavViewFragmentToEditFragment(args.host)
+                        findNavController().navigate(directions)
                         true
                     }
 

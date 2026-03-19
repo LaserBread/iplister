@@ -5,10 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -27,15 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
-        appBarConfig = AppBarConfiguration(navController.graph)
+        appBarConfig=AppBarConfiguration(navController.graph)
 
-        val topAppBar: MaterialToolbar = findViewById(R.id.top_appBar)
+        var topAppBar: MaterialToolbar = findViewById(R.id.top_appBar)
         setSupportActionBar(topAppBar)
-        setupActionBarWithNavController(navController, appBarConfig)
-    }
+        setupActionBarWithNavController(navController,appBarConfig)
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_container)
-        return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
+
+
     }
 }

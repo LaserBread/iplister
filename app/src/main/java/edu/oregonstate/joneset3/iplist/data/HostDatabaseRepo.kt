@@ -49,4 +49,18 @@ class HostDatabaseRepo(
                 Result.failure(e)
             }
         }
+
+    suspend fun update(host: Host): Result<Void?> =
+        withContext(ioDispatcher) {
+            try {
+                val res = service.update(host.id!!,host)
+                if (res.isSuccessful) {
+                    Result.success(null)
+                } else {
+                    Result.failure(Exception(res.errorBody()?.string()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
 }

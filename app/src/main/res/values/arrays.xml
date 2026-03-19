@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_display_entries">
+        <item>Hostname</item>
+        <item>IPv4</item>
+        <item>CIDR</item>
+        <item>MAC</item>
+    </string-array>
+
+    <string-array name="pref_display_values">
+        <item>@string/pref_display_hostname</item>
+        <item>@string/pref_display_ipv4</item>
+        <item>@string/pref_display_cidr</item>
+        <item>@string/pref_display_mac</item>
+    </string-array>
+</resources>

@@ -18,5 +18,13 @@
     <string name="added_host">Added host \"%1$s\"</string>
     <string name="deleted_host">Deleted host \'%1$s</string>
     <string name="loading_message_delete">Deleting host…</string>
+    <string name="pref_left_side" translatable="false">pref_left_side</string>
+    <string name="db_url" translatable="false">db_url</string>
+    <string name="pref_display_hostname" translatable="false">pref_display_hostname</string>
+    <string name="pref_display_ipv4" translatable="false">pref_display_ipv4</string>
+    <string name="pref_display_cidr" translatable="false">pref_display_cidr</string>
+    <string name="pref_display_mac" translatable="false">pref_display_mac</string>
+    <string name="pref_right_side">pref_right_side</string>
+    <string name="pref_pro_json">pref_pro_json</string>
 
 </resources>

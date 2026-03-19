@@ -62,4 +62,18 @@ class HostViewModel : ViewModel() {
             }
         }
     }
+
+    fun update(host:Host){
+        viewModelScope.launch {
+            _loadingStatus.value = LoadingStatus.LOADING
+            val result = repository.update(host)
+            if (result.isSuccess) {
+                _loadingStatus.value = LoadingStatus.SUCCESS
+                loadHosts()
+            } else {
+                _loadingStatus.value = LoadingStatus.ERROR
+                _errorMessage.value = result.exceptionOrNull()?.message
+            }
+        }
+    }
 }

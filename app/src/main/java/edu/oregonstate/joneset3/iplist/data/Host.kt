@@ -75,11 +75,6 @@ data class Host(
              errors.add(HostErrors.HOSTNAME_INVALID)
         }
 
-        // CIDR needs an IP address
-        if (cidr != null &&  ipv4 == null){
-            errors.add(HostErrors.NEEDS_ADDRESS)
-        }
-
         // CIDR must be between 0 and 32
         if (cidr != null && cidr !in 0..32){
             errors.add(HostErrors.CIDR_INVALID)
@@ -95,6 +90,11 @@ data class Host(
             } else {
                 errors.add(HostErrors.IPv4_INVALID)
             }
+        }
+
+        // CIDR needs an IP address
+        if (cidr != null &&  ipv4 == null){
+            errors.add(HostErrors.NEEDS_ADDRESS)
         }
 
         if(mac == null && ipStr == null && hostname == null){

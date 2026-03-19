@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 /**
@@ -34,6 +35,9 @@ interface HostDatabaseService {
 
     @DELETE("delete/{id}")
     suspend fun delete(@Path("id") id: Int): Response<Void>
+
+    @PUT("update/{id}")
+    suspend fun update(@Path("id") id: Int, @Body host: Host): Response<Void>
 
 
     companion object {
