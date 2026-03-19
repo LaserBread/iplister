@@ -12,5 +12,7 @@ enum class HostErrors {
 
     CIDR_INVALID, // Invalid CIDR
 
-    INVALID_MAC, // Invalid MAC Address
+    MAC_INVALID, // Invalid MAC Address
+
+    NEEDS_ADDRESS, // CIDR Needs address
 }

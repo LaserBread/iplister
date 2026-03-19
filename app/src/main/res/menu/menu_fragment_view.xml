@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/view_menuact_edit"
+        android:icon="@drawable/outline_edit_24"
+        android:iconTint="?attr/colorOnBackground"
+        android:title="@string/menu_act_edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/view_menuact_delete"
+        android:icon="@drawable/outline_delete_24"
+        android:iconTint="?attr/colorError"
+        android:title="@string/menu_act_delete"
+        app:showAsAction="ifRoom" />
+</menu>

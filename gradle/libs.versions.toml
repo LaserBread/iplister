@@ -18,6 +18,7 @@ fragment = "1.8.9"
 navigation = "2.9.7"
 preference = "1.2.1"
 ipaddress = "5.6.2"
+parcelize = "2.3.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,7 +48,11 @@ moshi-ksp = { group = "dev.zacsweers.moshix", name = "moshi-x-sealed-runtime", v
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines"}
 
+
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-navigation-safeargs = { id ="androidx.navigation.safeargs.kotlin" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "parcelize"  }

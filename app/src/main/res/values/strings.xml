@@ -2,5 +2,19 @@
     <string name="app_name">IP List</string>
     <string name="view_cidr_text">CIDR</string>
     <string name="host_view_entry_spacing">20sp</string>
+    <string name="menu_act_refresh">Refresh</string>
+    <string name="menu_act_export">Export to JSON</string>
+    <string name="menu_act_edit">Edit</string>
+    <string name="menu_act_delete">Delete</string>
+    <string name="err_no_name">Name is required</string>
+    <string name="err_name_long">Name is too long</string>
+    <string name="err_hostname_invalid">Invalid hostname: should only contain characters a-z, A-Z, 0-9, and -</string>
+    <string name="err_ipv4_invalid">Invalid IPv4 address: must be of the format x.x.x.x where x is a number between 0 and 255</string>
+    <string name="err_cidr_invalid">Invalid CIDR: must be between 0 and 32</string>
+    <string name="err_mac_invalid">Invalid MAC address: must be xx:xx:xx:xx:xx:xx containing only 0-9 or a-f</string>
+    <string name="err_needs_address">CIDR needs an IP address</string>
+    <string name="err_no_identifier">At least one of Hostname, IP, or MAC is required</string>
+    <string name="loading_dialog_title">Adding host…</string>
+    <string name="added_host">Added host \"%1$s\"</string>
 
 </resources>
