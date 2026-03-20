@@ -27,8 +27,8 @@
             app:destination="@id/nav_edit_fragment"
             app:popUpTo="@id/nav_view_fragment" />
         <argument
-            android:name="host"
-            app:argType="edu.oregonstate.joneset3.iplist.data.Host" />
+            android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -38,9 +38,6 @@
         android:id="@+id/nav_edit_fragment"
         android:name="edu.oregonstate.joneset3.iplist.fragments.EditFragment"
         android:label="View Host">
-        <action
-            android:id="@+id/action_nav_edit_fragment_to_nav_view_fragment"
-            app:destination="@id/nav_view_fragment" />
         <argument
             android:name="host"
             app:argType="edu.oregonstate.joneset3.iplist.data.Host" />

@@ -8,6 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -19,10 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import edu.oregonstate.cs492.roomgithubsearch.ui.HostViewModel
 import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
 import edu.oregonstate.joneset3.iplist.util.LoadingStatus
+import com.squareup.moshi.adapter
 
 class ListFragment : Fragment(R.layout.fragment_list) {
     private val tag = "MainActivity"
@@ -32,6 +37,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private lateinit var hostListRV: RecyclerView
     private lateinit var loadErrorTV: TextView
     private lateinit var loadingIndicator: CircularProgressIndicator
+
+    // Store the JSON temporarily while waiting for the user to pick a file location
+    private var JsonBuffer: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -121,6 +129,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     }
 
                     R.id.list_menuact_export -> {
+                        val exp = viewModel.hosts.value
+                        if(exp == null){
+                            com.google.android.material.snackbar.Snackbar.make(
+                                requireView(), "No hosts to export", com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
+                            ).show()
+                            return true
+                        }
+                        else {
+                            exportJson(exp)
+                        }
                         true
                     }
 
@@ -139,14 +157,63 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         viewModel.loadHosts()
     }
 
-
     override fun onStart() {
         super.onStart()
 
     }
 
+    private fun writeJsonToUri(uri: android.net.Uri) {
+        try {
+            requireContext().contentResolver.openFileDescriptor(uri, "w")?.use { descriptor ->
+                java.io.FileOutputStream(descriptor.fileDescriptor).use { outputStream ->
+                    outputStream.write(JsonBuffer?.toByteArray() ?: "".toByteArray())
+                }
+            }
+            // Optional: Show a success message
+            com.google.android.material.snackbar.Snackbar.make(
+                requireView(), "Exported successfully", com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
+            ).show()
+        } catch (e: Exception) {
+            Log.e(tag, "Failed to export file", e)
+        } finally {
+            JsonBuffer = null // Clear memory
+        }
+    }
+
+    private val createDocumentLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        uri?.let {
+            writeJsonToUri(it)
+        }
+    }
+
     private fun onHostClick(host: Host) {
-        val directions = ListFragmentDirections.actionNavListFragmentToViewFragment(host)
+        val directions = ListFragmentDirections.actionNavListFragmentToViewFragment(host.id!!)
         findNavController().navigate(directions)
+    }
+
+    private fun exportJson(hosts: List<Host>) {
+        // Prepare to serialize the object.
+        val sb = StringBuilder()
+        sb.append("[\n")
+
+        hosts.forEachIndexed { index, host ->
+            sb.append("  {\n")
+            sb.append("    \"name\": \"${host.name}\",\n")
+            sb.append("    \"hostname\": \"${host.hostname ?: ""}\",\n")
+            sb.append("    \"ipv4\": \"${host.ipv4 ?: ""}\",\n")
+            sb.append("    \"cidr\": \"${host.cidr ?: ""}\",\n")
+            sb.append("    \"mac\": \"${host.mac ?: ""}\",\n")
+            sb.append("    \"notes\": \"${host.notes ?: ""}\"\n")
+            sb.append("  }")
+            if (index < hosts.size - 1) sb.append(",")
+            sb.append("\n")
+        }
+        sb.append("]")
+        JsonBuffer = sb.toString()
+
+
+        createDocumentLauncher.launch("hosts_export.json")
     }
 }

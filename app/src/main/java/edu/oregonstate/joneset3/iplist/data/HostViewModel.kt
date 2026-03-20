@@ -76,4 +76,19 @@ class HostViewModel : ViewModel() {
             }
         }
     }
+
+    fun getHostById(id: Int): Host? {
+        return _hosts.value?.find { it.id == id }
+    }
+
+    fun replaceOrAppendHost(newHost: Host) {
+        val currentHosts = _hosts.value?.toMutableList() ?: mutableListOf()
+        val index = currentHosts.indexOfFirst { it.id == newHost.id }
+        if (index != -1) {
+            currentHosts[index] = newHost
+        } else {
+            currentHosts.add(newHost)
+        }
+        _hosts.value = currentHosts
+    }
 }

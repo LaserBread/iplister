@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,12 +34,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private lateinit var cidrTIL: TextInputLayout
     private lateinit var macTIL: TextInputLayout
     private lateinit var notesTIL: TextInputLayout
-    val viewModel: HostViewModel by viewModels()
+    val viewModel: HostViewModel by activityViewModels()
     val args: EditFragmentArgs by navArgs()
 
     private var loadingDialog: AlertDialog? = null
     private var submitting: Boolean = false
     private var nameOfAddedHost: String = ""
+    private var hostToAdd: Host? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,13 +78,13 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     return when (menuItem.itemId) {
                         R.id.edit_action_save -> {
-                            val hostToAdd = validateInputs()
+                            hostToAdd = validateInputs()
                             if (hostToAdd != null) {
                                 Log.d(tag, "Valid inputs")
                                 showLoadingDialog()
                                 submitting = true
-                                nameOfAddedHost = hostToAdd.name
-                                viewModel.update(hostToAdd)
+                                nameOfAddedHost = hostToAdd!!.name
+                                viewModel.update(hostToAdd!!)
                             }
                             true
                         }
@@ -106,14 +107,14 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                     LoadingStatus.LOADING -> showLoadingDialog()
                     LoadingStatus.SUCCESS -> {
                         hideLoadingDialog()
+                        viewModel.replaceOrAppendHost(hostToAdd!!)
                         submitting = false
                         Snackbar.make(
                             requireView(),
                             getString(R.string.added_host, nameOfAddedHost),
                             Snackbar.LENGTH_LONG
                         ).show()
-                        val directions = EditFragmentDirections.actionNavEditFragmentToNavViewFragment(args.host)
-                        findNavController().navigate(directions)
+                        findNavController().navigateUp()
                     }
 
                     LoadingStatus.ERROR -> {

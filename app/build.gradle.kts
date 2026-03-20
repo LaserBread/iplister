@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.moshi.kotlin)
     implementation(libs.ipaddress)
+    implementation(libs.gson)
 
     implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.convertermoshi)

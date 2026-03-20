@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -33,7 +33,7 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
     private lateinit var cidrTIL: TextInputLayout
     private lateinit var macTIL: TextInputLayout
     private lateinit var notesTIL: TextInputLayout
-    val viewModel: HostViewModel by viewModels()
+    val viewModel: HostViewModel by activityViewModels()
 
     private var loadingDialog: AlertDialog? = null
     private var submitting: Boolean = false

@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -30,8 +31,11 @@ class MainActivity : AppCompatActivity() {
         var topAppBar: MaterialToolbar = findViewById(R.id.top_appBar)
         setSupportActionBar(topAppBar)
         setupActionBarWithNavController(navController,appBarConfig)
+    }
 
-
-
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+        return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
     }
 }
