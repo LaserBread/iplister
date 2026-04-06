@@ -32,6 +32,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
     private lateinit var hostnameTIL: TextInputLayout
     private lateinit var ipv4TIL: TextInputLayout
     private lateinit var cidrTIL: TextInputLayout
+    private lateinit var ipv6TIL: TextInputLayout
     private lateinit var macTIL: TextInputLayout
     private lateinit var notesTIL: TextInputLayout
     val viewModel: HostViewModel by activityViewModels()
@@ -50,6 +51,7 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
         ipv4TIL = view.findViewById(R.id.txtedit_ipv4)
         cidrTIL = view.findViewById(R.id.txtedit_cidr)
         macTIL = view.findViewById(R.id.txtedit_mac)
+        ipv6TIL = view.findViewById(R.id.txtedit_ipv6)
         notesTIL = view.findViewById(R.id.txtedit_notes)
 
         // Pre-fill fields with existing host data
@@ -181,13 +183,14 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
 
     private fun validateInputs(): Host? {
         // Clear previous errors
-        listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL).forEach { it.error = null }
+        listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL, ipv6TIL).forEach { it.error = null }
 
         val name = nameTIL.editText?.text.toString()
         val hostname = hostnameTIL.editText?.text.toString().takeIf { it.isNotBlank() }
         val ipv4String = ipv4TIL.editText?.text.toString().takeIf { it.isNotBlank() }
         val cidr = cidrTIL.editText?.text.toString().toIntOrNull()
         val mac = macTIL.editText?.text.toString().takeIf { it.isNotBlank() }
+        val ipv6String = ipv6TIL.editText?.text.toString().takeIf { it.isNotBlank() }
         val notes = notesTIL.editText?.text.toString().takeIf { it.isNotBlank() }
 
         val host = Host(
@@ -195,11 +198,10 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
             hostname = hostname,
             cidr = cidr,
             mac = mac,
-            notes = notes,
-            id = args.host.id // Preserve ID during edit
+            notes = notes
         )
 
-        val errors = host.validate(ipv4String)
+        val errors = host.validate(ipv4String, ipv6String)
 
         // Map HostErrors to UI
         errors.forEach { error ->
@@ -214,7 +216,10 @@ class EditFragment : Fragment(R.layout.fragment_edit) {
                 HostErrors.MAC_INVALID -> macTIL.error = getString(R.string.err_mac_invalid)
                 HostErrors.NEEDS_ADDRESS -> cidrTIL.error =
                     getString(R.string.err_needs_address)
-
+                HostErrors.IPv6_INVALID -> {
+                    ipv6TIL.error = getString(R.string.err_ipv6_invalid)
+                    ipv6TIL.setErrorIconDrawable(R.drawable.outline_help_24)
+                }
                 HostErrors.NO_IDENTIFIER -> {
                     val msg = getString(R.string.err_no_identifier)
                     hostnameTIL.error = msg

@@ -22,6 +22,7 @@ import edu.oregonstate.cs492.roomgithubsearch.ui.HostViewModel
 import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
 import edu.oregonstate.joneset3.iplist.data.HostErrors
+import edu.oregonstate.joneset3.iplist.util.Guides
 import edu.oregonstate.joneset3.iplist.util.LoadingStatus
 
 class AddFragment : Fragment(R.layout.fragment_edit) {
@@ -32,6 +33,7 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
     private lateinit var ipv4TIL: TextInputLayout
     private lateinit var cidrTIL: TextInputLayout
     private lateinit var macTIL: TextInputLayout
+    private lateinit var ipv6TIL: TextInputLayout
     private lateinit var notesTIL: TextInputLayout
     val viewModel: HostViewModel by activityViewModels()
 
@@ -39,25 +41,16 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
     private var submitting: Boolean = false
     private var nameOfAddedHost: String = ""
 
+    private val TILs by lazy{ listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL, ipv6TIL, notesTIL) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Intercept the back button and display a confirmation prompt
-
-
-
-        nameTIL = view.findViewById(R.id.txtedit_name)
-        hostnameTIL = view.findViewById(R.id.txtedit_hostname)
-        ipv4TIL = view.findViewById(R.id.txtedit_ipv4)
-        cidrTIL = view.findViewById(R.id.txtedit_cidr)
-        macTIL = view.findViewById(R.id.txtedit_mac)
-        notesTIL = view.findViewById(R.id.txtedit_notes)
-
+        
+        initTILs()
 
         // Intercept the back button and display a confirmation prompt
             val backCallback = object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val hasChanges = !listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL).all {
+                    val hasChanges = !TILs.all {
                         it.editText?.text.isNullOrBlank()
                     }
 
@@ -145,7 +138,7 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
         // If we're already submitting, don't show the warning, just let it finish
         if (submitting) return
 
-        val hasChanges = listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL, notesTIL).any {
+        val hasChanges = TILs.any {
             !it.editText?.text.isNullOrBlank()
         }
 
@@ -190,13 +183,14 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
 
         private fun validateInputs(): Host? {
             // Clear previous errors
-            listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL).forEach { it.error = null }
+            listOf(nameTIL, hostnameTIL, ipv4TIL, cidrTIL, macTIL, ipv6TIL).forEach { it.error = null }
 
             val name = nameTIL.editText?.text.toString()
             val hostname = hostnameTIL.editText?.text.toString().takeIf { it.isNotBlank() }
             val ipv4String = ipv4TIL.editText?.text.toString().takeIf { it.isNotBlank() }
             val cidr = cidrTIL.editText?.text.toString().toIntOrNull()
             val mac = macTIL.editText?.text.toString().takeIf { it.isNotBlank() }
+            val ipv6String = ipv6TIL.editText?.text.toString().takeIf { it.isNotBlank() }
             val notes = notesTIL.editText?.text.toString().takeIf { it.isNotBlank() }
 
             val host = Host(
@@ -207,7 +201,7 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
                 notes = notes
             )
 
-            val errors = host.validate(ipv4String)
+            val errors = host.validate(ipv4String, ipv6String)
 
             // Map HostErrors to UI
             errors.forEach { error ->
@@ -222,15 +216,61 @@ class AddFragment : Fragment(R.layout.fragment_edit) {
                     HostErrors.MAC_INVALID -> macTIL.error = getString(R.string.err_mac_invalid)
                     HostErrors.NEEDS_ADDRESS -> cidrTIL.error =
                         getString(R.string.err_needs_address)
-
+                    HostErrors.IPv6_INVALID -> ipv6TIL.error = getString(R.string.err_ipv6_invalid)
                     HostErrors.NO_IDENTIFIER -> {
                         val msg = getString(R.string.err_no_identifier)
                         hostnameTIL.error = msg
                         ipv4TIL.error = msg
                         macTIL.error = msg
+                        ipv6TIL.error = msg
                     }
                 }
             }
             return if (errors.isEmpty()) host else null
         }
+    
+    private fun initTILs(){
+        // I want my own custom error message here.
+        if (view == null){
+            throw IllegalStateException("Tried to initialize TILs without a View.")
+        }
+        
+        // Initialize the TextInputLayouts
+        nameTIL = requireView().findViewById(R.id.txtedit_name)
+        hostnameTIL = requireView().findViewById(R.id.txtedit_hostname)
+        ipv4TIL = requireView().findViewById(R.id.txtedit_ipv4)
+        cidrTIL = requireView().findViewById(R.id.txtedit_cidr)
+        macTIL = requireView().findViewById(R.id.txtedit_mac)
+        ipv6TIL = requireView().findViewById(R.id.txtedit_ipv6)
+        notesTIL = requireView().findViewById(R.id.txtedit_notes)
+
+
+
+        // Set the error icons and Guides for each TIL.
+        hostnameTIL.setErrorIconDrawable(R.drawable.outline_help_24)
+        hostnameTIL.setErrorIconOnClickListener {
+            Guides.hostnameGuide(requireContext())
+        }
+
+        ipv4TIL.setErrorIconDrawable(R.drawable.outline_help_24)
+        ipv4TIL.setErrorIconOnClickListener {
+            Guides.ipv4Guide(requireContext())
+        }
+
+        ipv6TIL.setErrorIconDrawable(R.drawable.outline_help_24)
+        ipv6TIL.setErrorIconOnClickListener {
+            Guides.ipv6Guide(requireContext())
+        }
+
+        macTIL.setErrorIconDrawable(R.drawable.outline_help_24)
+        macTIL.setErrorIconOnClickListener {
+            Guides.macGuide(requireContext())
+        }
+
+        // Set the name error icon to nothing. This is to avoid confusing the noninteractive
+        // ! icon with the interactive ? icons.
+        nameTIL.setErrorIconDrawable(R.drawable.literally_nothing)
+        
+
     }
+}

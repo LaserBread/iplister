@@ -17,6 +17,8 @@ class HostListAdapter(
     private var _leftSide: String = "pref_display_ipv4"
     private var _rightSide: String = "pref_display_hostname"
 
+
+    // A dummy object that prevents the FAB from covering up the end side of the fragment.
     val dummy = Host(
         name = "Dummy",
         hostname = null,

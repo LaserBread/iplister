@@ -176,10 +176,11 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         } catch (e: Exception) {
             Log.e(tag, "Failed to export file", e)
         } finally {
-            JsonBuffer = null // Clear memory
+            JsonBuffer = null // Clear the buffer
         }
     }
 
+    // Create the system that will handle exporting our file
     private val createDocumentLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
@@ -188,11 +189,15 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         }
     }
 
+    // Clicking on a host navigates it to the database ID of the selected host
     private fun onHostClick(host: Host) {
+
         val directions = ListFragmentDirections.actionNavListFragmentToViewFragment(host.id!!)
         findNavController().navigate(directions)
     }
 
+    // I will admit, I was trying everything to get Moshi to work with this, but nothing worked,
+    // so I just had to do it manually.
     private fun exportJson(hosts: List<Host>) {
         // Prepare to serialize the object.
         val sb = StringBuilder()

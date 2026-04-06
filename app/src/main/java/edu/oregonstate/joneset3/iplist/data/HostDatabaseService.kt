@@ -10,11 +10,17 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import kotlin.time.Instant
+
+val lastUpdate: Instant = Instant.DISTANT_PAST
 
 /**
  * This is a Retrofit service interface encapsulating communication with the Host Database.
  */
 interface HostDatabaseService {
+
+
+
     /**
      * Fetches all hosts from the database.
      *
@@ -51,6 +57,7 @@ interface HostDatabaseService {
         fun create() : HostDatabaseService {
             val moshi = Moshi.Builder()
                 .add(IPv4Adapter())
+                .add(IPv6Adapter())
                 .build()
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)

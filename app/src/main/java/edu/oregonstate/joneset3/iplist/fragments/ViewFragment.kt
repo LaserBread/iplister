@@ -1,5 +1,6 @@
 package edu.oregonstate.joneset3.iplist.fragments
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,19 +13,19 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import edu.oregonstate.cs492.roomgithubsearch.ui.HostViewModel
 import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
 import edu.oregonstate.joneset3.iplist.util.LoadingStatus
+
 
 class ViewFragment : Fragment(R.layout.fragment_view) {
     private val tag = "MainActivity"
@@ -40,12 +41,15 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
     private lateinit var cidrTV: TextView
     private lateinit var macTV: TextView
     private lateinit var notesTV: TextView
+    private lateinit var ipv6TV: TextView
 
     private lateinit var hostnameGroup: ConstraintLayout
     private lateinit var ipv4Group: ConstraintLayout
     private lateinit var macGroup: ConstraintLayout
     private lateinit var cidrGroup: Group
     private lateinit var notesGroup: ConstraintLayout
+    private lateinit var ipv6Group: ConstraintLayout
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,19 +60,26 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
         cidrTV = view.findViewById<TextView>(R.id.view_cidr)
         macTV = view.findViewById<TextView>(R.id.view_mac)
         notesTV = view.findViewById<TextView>(R.id.view_notes)
+        ipv6TV = view.findViewById<TextView>(R.id.view_ipv6)
+
 
         hostnameGroup = view.findViewById<ConstraintLayout>(R.id.view_group_hostname)
         ipv4Group = view.findViewById<ConstraintLayout>(R.id.view_group_ipv4)
         macGroup = view.findViewById<ConstraintLayout>(R.id.view_group_mac)
         cidrGroup = view.findViewById<Group>(R.id.view_group_cidr)
         notesGroup = view.findViewById<ConstraintLayout>(R.id.view_group_notes)
-        
+        ipv6Group = view.findViewById<ConstraintLayout>(R.id.view_group_ipv6)
+
+
+        // We use the database ID of the host to identify which one we need to pull.
         val host = viewModel.getHostById(args.id)
         if (host == null) {
+            // If the host is invalid, go back. I would've had it throw an IllegalStateException
+            // but a user could trigger this inadvertently if they were really quick and tapped a
+            // deleted host before the ListFragment calls reload.
             findNavController().navigateUp()
             return
         }
-
 
         titleTV.text = host.name
 
@@ -82,12 +93,38 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
         cidrGroup.visibility = if (host.cidr != null) View.VISIBLE else View.GONE
         cidrTV.text = "/${host.cidr.toString()}"
 
+        ipv6Group.visibility = if (host.ipv6 != null) View.VISIBLE else View.GONE
+        ipv6TV.text = host.ipv6.toString()
+
         macGroup.visibility = if (host.mac != null) View.VISIBLE else View.GONE
         macTV.text = host.mac
 
         notesGroup.visibility = if (host.notes != null) View.VISIBLE else View.GONE
         notesTV.text = host.notes
 
+        // Check if the IPv4 Address and CIDR labels are overlapping.
+        val ipv4LabelTV = view.findViewById<TextView>(R.id.view_ipv4_label)
+        val cidrLabelTV = view.findViewById<TextView>(R.id.view_cidr_label)
+
+        // Queue this function to act when the layout fully loads
+        ipv4LabelTV.doOnLayout {
+            val ipv4LabelHitbox = Rect()
+            val cidrLabelHitbox = Rect()
+
+            ipv4LabelTV.getGlobalVisibleRect(ipv4LabelHitbox)
+            cidrLabelTV.getGlobalVisibleRect(cidrLabelHitbox)
+
+            if (Rect.intersects(cidrLabelHitbox, ipv4LabelHitbox)) {
+                // Hide the CIDR label to prevent overlap
+                cidrLabelTV.visibility = View.INVISIBLE
+
+                ipv4LabelTV.text = getString(
+                    R.string.combined_label,
+                    getString(R.string.label_ipv4),
+                    getString(R.string.label_cidr)
+                )
+            }
+        }
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -121,9 +158,12 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
 
         viewModel.loadingStatus.observe(viewLifecycleOwner)
         { status ->
+            // This only triggers when we are deleting something
             if (deleting) {
                 when (status) {
                     LoadingStatus.LOADING -> showLoadingDialog()
+
+                    // When successfully deleted, return to the last screen.
                     LoadingStatus.SUCCESS -> {
                         hideLoadingDialog()
                         deleting = false
@@ -132,6 +172,8 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
                             getString(R.string.deleted_host, host.name),
                             Snackbar.LENGTH_LONG
                         ).show()
+                        // Tell the viewmodel to start loading
+                        viewModel.loadHosts()
                         findNavController().navigateUp()
                     }
 
@@ -155,6 +197,8 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
             .setPositiveButton("Delete") { _, _ ->
                 deleting = true
                 showLoadingDialog()
+
+                // Make a request to the database to delete the ID.
                 viewModel.delete(hostToDelete)
             }
             .setNegativeButton("Cancel", null)

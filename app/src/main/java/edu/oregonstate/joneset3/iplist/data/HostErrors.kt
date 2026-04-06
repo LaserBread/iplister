@@ -15,4 +15,7 @@ enum class HostErrors {
     MAC_INVALID, // Invalid MAC Address
 
     NEEDS_ADDRESS, // CIDR Needs address
+
+    IPv6_INVALID, // Invalid IPv6 address
+
 }

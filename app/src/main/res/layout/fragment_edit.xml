@@ -13,7 +13,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
+            android:hint="@string/label_title"
             android:maxLines="1"
             android:maxLength="100"
             />
@@ -28,7 +28,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hostname"
+            android:hint="@string/label_hostname"
             android:inputType="textNoSuggestions"
             android:maxLength="63"
             android:maxLines="1"
@@ -44,7 +44,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="IPv4 Address"
+            android:hint="@string/label_ipv4"
             android:maxLength="15"
             android:maxLines="1"
             android:inputType="textNoSuggestions"
@@ -60,8 +60,23 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CIDR"
+            android:hint="@string/label_cidr"
             android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtedit_ipv6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_ipv6"
+            android:inputType="textNoSuggestions"
+            android:maxLength="17"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +89,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="MAC Address"
+            android:hint="@string/label_mac"
             android:inputType="textNoSuggestions"
             android:maxLength="17"
             />
@@ -89,7 +104,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Notes"
+            android:hint="@string/label_notes"
             android:lines="5"
             />
 

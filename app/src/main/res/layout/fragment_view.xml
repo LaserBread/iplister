@@ -5,14 +5,15 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <TextView
         android:id="@+id/view_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Laptop"
-        android:textAppearance="?attr/textAppearanceHeadline3" />
+        android:text="&lt;title&gt;"
+        android:textAppearance="?attr/textAppearanceHeadline3"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view_group_hostname"
@@ -33,7 +34,7 @@
             android:id="@+id/view_hostname_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hostname"
+            android:text="@string/label_hostname"
             android:textAppearance="?attr/textAppearanceLabelSmall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_hostname" />
@@ -72,7 +73,7 @@
             android:id="@+id/view_ipv4_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IPv4 Address"
+            android:text="@string/label_ipv4"
             android:textAppearance="?attr/textAppearanceBodySmall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_ipv4" />
@@ -97,13 +98,52 @@
             android:id="@+id/view_cidr_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/view_cidr_text"
+            android:text="@string/label_cidr"
             android:textAppearance="?attr/textAppearanceBodySmall"
             app:layout_constraintEnd_toEndOf="@id/view_cidr"
             app:layout_constraintTop_toBottomOf="@id/view_cidr" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/view_ipv4_copybutton"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
+            android:background="?android:attr/selectableItemBackground"
+            app:icon="@drawable/outline_content_copy_24"
+            app:iconSize="24sp"
+            app:iconTint="?attr/colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_group_ipv6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_host_entry_margin">
+
+        <TextView
+            android:id="@+id/view_ipv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2560:dbc8:56e9::5c:"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/view_ipv6_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_ipv6"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_ipv6" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/view_ipv6_copybutton"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
@@ -136,7 +176,7 @@
             android:id="@+id/view_mac_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MAC Address"
+            android:text="@string/label_mac"
             android:textAppearance="?attr/textAppearanceBodySmall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_mac" />
@@ -166,7 +206,7 @@
             android:id="@+id/view_notes_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notes"
+            android:text="@string/label_notes"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

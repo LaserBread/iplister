@@ -13,3 +13,7 @@ network. Download and install the app.
 
 ## Acknowledgements
 This app uses [Sean Foley's IPAddress library](https://github.com/seancfoley/IPAddress).
+
+Several RegExps were found on StackOverflow:
+- [IPv4 Address validation from Danail Gabenski](https://stackoverflow.com/a/36760050)
+- [MAC Address validation from netcoder](https://stackoverflow.com/a/4260512)

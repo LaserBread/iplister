@@ -8,7 +8,7 @@
 
     <ListPreference
         android:key="@string/pref_left_side"
-        android:title="Left Side Detail"
+        android:title="@string/label_pref_left_side_detail"
         app:useSimpleSummaryProvider="true"
         android:entries="@array/pref_display_entries"
         android:defaultValue="@string/pref_display_ipv4"
@@ -16,16 +16,10 @@
         />
     <ListPreference
         android:key="@string/pref_right_side"
-        android:title="Right Side Detail"
+        android:title="@string/label_pref_right_side_detail"
         app:useSimpleSummaryProvider="true"
         android:defaultValue="@string/pref_display_hostname"
         android:entries="@array/pref_display_entries"
         android:entryValues="@array/pref_display_values"/>
     />
-    <SwitchPreference
-        android:key="@string/pref_pro_json"
-        android:title="Export Technical JSON"
-        app:useSimpleSummaryProvider="true"
-        android:defaultValue="false"
-        />
 </androidx.preference.PreferenceScreen>
