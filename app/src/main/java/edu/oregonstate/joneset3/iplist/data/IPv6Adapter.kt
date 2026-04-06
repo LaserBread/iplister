@@ -1,5 +1,6 @@
 package edu.oregonstate.joneset3.iplist.data
 
+import android.util.Log
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import inet.ipaddr.IPAddress
@@ -15,6 +16,6 @@ class IPv6Adapter {
 
     @ToJson
     fun toJson(ipv6Address: IPv6Address?): String? {
-        return ipv6Address?.value?.toString()
+        return ipv6Address?.toString()
     }
 }

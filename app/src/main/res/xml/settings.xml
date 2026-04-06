@@ -21,5 +21,10 @@
         android:defaultValue="@string/pref_display_hostname"
         android:entries="@array/pref_display_entries"
         android:entryValues="@array/pref_display_values"/>
+
+    <SwitchPreference
+        android:key="pref_full_ipv6"
+        android:title="Show full IPv6 Addresses"
+        android:defaultValue="false"
     />
 </androidx.preference.PreferenceScreen>

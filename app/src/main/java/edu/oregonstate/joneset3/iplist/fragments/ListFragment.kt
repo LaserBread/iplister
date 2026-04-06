@@ -210,6 +210,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             sb.append("    \"ipv4\": \"${host.ipv4 ?: ""}\",\n")
             sb.append("    \"cidr\": \"${host.cidr ?: ""}\",\n")
             sb.append("    \"mac\": \"${host.mac ?: ""}\",\n")
+            sb.append("    \"ipv6\": \"${host.ipv6 ?: ""}\",\n")
             sb.append("    \"notes\": \"${host.notes ?: ""}\"\n")
             sb.append("  }")
             if (index < hosts.size - 1) sb.append(",")

@@ -24,11 +24,12 @@ import com.google.android.material.snackbar.Snackbar
 import edu.oregonstate.cs492.roomgithubsearch.ui.HostViewModel
 import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
+import edu.oregonstate.joneset3.iplist.util.IPv6Utils
 import edu.oregonstate.joneset3.iplist.util.LoadingStatus
 
 
 class ViewFragment : Fragment(R.layout.fragment_view) {
-    private val tag = "MainActivity"
+    private val logTag = "MainActivity"
     private val viewModel: HostViewModel by activityViewModels()
     private val args: ViewFragmentArgs by navArgs()
 
@@ -94,7 +95,7 @@ class ViewFragment : Fragment(R.layout.fragment_view) {
         cidrTV.text = "/${host.cidr.toString()}"
 
         ipv6Group.visibility = if (host.ipv6 != null) View.VISIBLE else View.GONE
-        ipv6TV.text = host.ipv6.toString()
+        ipv6TV.text = host.ipv6?.let { IPv6Utils.getFormattedIPv6(requireContext(), it) }
 
         macGroup.visibility = if (host.mac != null) View.VISIBLE else View.GONE
         macTV.text = host.mac

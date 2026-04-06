@@ -5,6 +5,7 @@
         <item>@string/label_ipv4</item>
         <item>@string/label_cidr</item>
         <item>@string/label_mac</item>
+        <item>@string/label_ipv6</item>
     </string-array>
 
     <string-array name="pref_display_values">
@@ -12,5 +13,6 @@
         <item>@string/pref_display_ipv4</item>
         <item>@string/pref_display_cidr</item>
         <item>@string/pref_display_mac</item>
+        <item>@string/pref_display_ipv6</item>
     </string-array>
 </resources>

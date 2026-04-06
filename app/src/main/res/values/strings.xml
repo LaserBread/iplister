@@ -1,40 +1,43 @@
 <resources>
+    <string name="added_host">Added host \"%1$s\"</string>
     <string name="app_name">IP List</string>
-    <string name="label_cidr">CIDR</string>
-    <string name="host_view_entry_spacing">20sp</string>
-    <string name="menu_act_refresh">Refresh</string>
-    <string name="menu_act_export">Export to JSON</string>
-    <string name="menu_act_edit">Edit</string>
-    <string name="menu_act_delete">Delete</string>
-    <string name="err_no_name">Name is required</string>
-    <string name="err_name_long">Name is too long</string>
+    <string name="combined_label">%1$s / %2$s</string>
+    <string name="db_url" translatable="false">db_url</string>
+    <string name="deleted_host">Deleted host \'%1$s</string>
+    <string name="edited_host">Updated host \"%1$s\"</string>
+    <string name="err_cidr_invalid">Invalid CIDR: must be between 0 and 32</string>
     <string name="err_hostname_invalid">Invalid hostname: should only contain characters a-z, A-Z, 0-9, and -</string>
     <string name="err_ipv4_invalid">Invalid IPv4 address: must be of the format x.x.x.x where x is a number between 0 and 255</string>
-    <string name="err_cidr_invalid">Invalid CIDR: must be between 0 and 32</string>
+    <string name="err_ipv6_invalid">Invalid IPv6 Address.</string>
     <string name="err_mac_invalid">Invalid MAC address: must be xx:xx:xx:xx:xx:xx containing only 0-9 or a-f</string>
+    <string name="err_name_long">Name is too long</string>
     <string name="err_needs_address">CIDR needs an IP address</string>
     <string name="err_no_identifier">At least one of Hostname, IPv4, IPv6, or MAC is required</string>
-    <string name="loading_dialog_title">Adding host…</string>
-    <string name="added_host">Added host \"%1$s\"</string>
-    <string name="deleted_host">Deleted host \'%1$s</string>
-    <string name="loading_message_delete">Deleting host…</string>
-    <string name="pref_left_side" translatable="false">pref_left_side</string>
-    <string name="db_url" translatable="false">db_url</string>
-    <string name="pref_display_hostname" translatable="false">pref_display_hostname</string>
-    <string name="pref_display_ipv4" translatable="false">pref_display_ipv4</string>
-    <string name="pref_display_cidr" translatable="false">pref_display_cidr</string>
-    <string name="pref_display_mac" translatable="false">pref_display_mac</string>
-    <string name="pref_right_side">pref_right_side</string>
-    <string name="pref_pro_json">pref_pro_json</string>
+    <string name="err_no_name">Name is required</string>
+    <string name="guide_dialog_dismiss">Close</string>
+    <string name="host_view_entry_spacing">20sp</string>
+    <string name="label_cidr">CIDR</string>
+    <string name="label_hostname">Hostname</string>
     <string name="label_ipv4">IPv4 Address</string>
+    <string name="label_ipv6">IPv6 Address</string>
     <string name="label_mac">MAC Address</string>
     <string name="label_notes">Notes</string>
-    <string name="label_hostname">Hostname</string>
-    <string name="label_title">Title</string>
-    <string name="label_pref_right_side_detail">Right Side Detail</string>
     <string name="label_pref_left_side_detail">Left Side Detail</string>
-    <string name="combined_label">%1$s / %2$s</string>
-    <string name="label_ipv6">IPv6 Address</string>
-    <string name="err_ipv6_invalid">Invalid IPv6 Address.</string>
-    <string name="guide_dialog_dismiss">Close</string>
+    <string name="label_pref_right_side_detail">Right Side Detail</string>
+    <string name="label_title">Title</string>
+    <string name="loading_message_add">Adding host…</string>
+    <string name="loading_message_delete">Deleting host…</string>
+    <string name="loading_message_edit">Updating host…</string>
+    <string name="menu_act_delete">Delete</string>
+    <string name="menu_act_edit">Edit</string>
+    <string name="menu_act_export">Export to JSON</string>
+    <string name="menu_act_refresh">Refresh</string>
+    <string name="pref_display_cidr" translatable="false">pref_display_cidr</string>
+    <string name="pref_display_hostname" translatable="false">pref_display_hostname</string>
+    <string name="pref_display_ipv4" translatable="false">pref_display_ipv4</string>
+    <string name="pref_display_mac" translatable="false">pref_display_mac</string>
+    <string name="pref_display_ipv6" translatable="false">pref_display_ipv6</string>
+    <string name="pref_left_side" translatable="false">pref_left_side</string>
+    <string name="pref_pro_json">pref_pro_json</string>
+    <string name="pref_right_side">pref_right_side</string>
 </resources>

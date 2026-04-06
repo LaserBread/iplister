@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.joneset3.iplist.R
 import edu.oregonstate.joneset3.iplist.data.Host
+import edu.oregonstate.joneset3.iplist.util.IPv6Utils
 
 
 class HostListAdapter(
@@ -71,7 +72,7 @@ class HostListAdapter(
         fun bind(host: Host) {
             currentHost = host
 
-            // If this has an ID of -1, make everything invisible.
+            // If this has an ID of -1, make everything on it invisible.
             // This ensures one dummy element exists so the final element isn't
             // covered by the floating action button.
             if(host.id == -1){
@@ -90,6 +91,7 @@ class HostListAdapter(
             "pref_display_ipv4" -> host.ipv4?.toString() ?: "[No IPv4]"
             "pref_display_cidr" -> host.cidr?.toString() ?: "[No CIDR]"
             "pref_display_mac" -> host.mac ?: "[No MAC]"
+            "pref_display_ipv6" -> host.ipv6?.let { IPv6Utils.getFormattedIPv6(itemView.context, it) } ?: "[No IPv6]"
             else -> ""
         }
 
