@@ -101,12 +101,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     hostListRV.visibility = View.INVISIBLE
                     loadingIndicator.visibility = View.VISIBLE
                     loadErrorTV.visibility = View.INVISIBLE
+                    noItemTitleTV.visibility = View.INVISIBLE
+                    noItemBodyTV.visibility = View.INVISIBLE
                 }
 
                 LoadingStatus.ERROR -> {
                     hostListRV.visibility = View.INVISIBLE
                     loadingIndicator.visibility = View.INVISIBLE
                     loadErrorTV.visibility = View.VISIBLE
+                    noItemTitleTV.visibility = View.INVISIBLE
+                    noItemBodyTV.visibility = View.INVISIBLE
                 }
             }
         }
